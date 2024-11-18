@@ -14,10 +14,11 @@ public class TestBase {
         Configuration.browser = System.getProperty("browser", "chrome");
         Configuration.browserVersion = System.getProperty("browserVersion", "125.0");
         Configuration.browserSize = System.getProperty("browserSize");
+        Configuration.remote = System.getProperty("remoteURL");
         RestAssured.baseURI = "https://demoqa.com";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.remote = System.getProperty("remoteURL");
+
     }
 
     @AfterEach
