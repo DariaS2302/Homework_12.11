@@ -25,7 +25,7 @@ public class BookStoreApi {
 
     }
 
-    public static void addBookToList(String isbn) {
+    public static void addBookToCart (String isbn) {
 
         AddBookRequestModel request = new AddBookRequestModel();
         IsbnModel isbnModel = new IsbnModel();

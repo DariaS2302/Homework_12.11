@@ -25,7 +25,7 @@ public class BookStoreTest extends TestBase {
                 BookStoreApi.deleteAllBooksInCart());
 
         step("Добавить книгу в корзину", () ->
-                BookStoreApi.addBookToList("9781449325862"));
+                BookStoreApi.addBookToCart("9781449325862"));
 
         step("Удалить книгу из корзины", () -> {
             ProfilePage.openPage();
