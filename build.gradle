@@ -39,6 +39,10 @@ dependencies {
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.11.1')
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 tasks.withType(Test) {
     useJUnitPlatform()
 

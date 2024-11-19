@@ -25,7 +25,8 @@ public class LoginExtension implements BeforeEachCallback {
         AuthorizationData.EXPIRES = cookies.getExpires();
         AuthorizationData.USER_TOKEN = cookies.getToken();
 
-        step("Добавить cookie (в ответе) из браузера", () -> {
+        step("Добавить cookie из браузера", () -> {
+
             open("/favicon.ico");
             getWebDriver().manage().addCookie(new Cookie("userID", cookies.getUserId()));
             getWebDriver().manage().addCookie(new Cookie("expires", cookies.getExpires()));
