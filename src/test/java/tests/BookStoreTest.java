@@ -30,10 +30,6 @@ public class BookStoreTest extends TestBase {
         step("Удалить книгу из корзины", () -> {
             ProfilePage.openPage();
             ProfilePage.deleteOneBook();
-        });
-
-        step("Проверить удаление книги через UI", () -> {
-            ProfilePage.openPage();
             ProfilePage.checkDeleteBookWithUI();
         });
 

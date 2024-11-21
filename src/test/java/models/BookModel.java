@@ -5,16 +5,16 @@ import lombok.Data;
 @Data
 public class BookModel {
 
-    String isbn,
+    private String isbn,
             title,
             subTitle,
             author,
             publish_date,
             publisher;
 
-    int pages;
+    private int pages;
 
-    String description,
+    private String description,
             website;
 
 }

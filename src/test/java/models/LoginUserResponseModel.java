@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class LoginUserResponseModel {
-    String userId, username, password, token, expires, created_date;
-    Boolean isActive;
+    private String userId, username, password, token, expires, created_date;
+    private Boolean isActive;
 }
