@@ -1,18 +1,22 @@
 plugins {
     id 'java-library'
-    id 'io.qameta.allure' version '2.11.2'
     id "io.freefair.lombok" version "6.0.0-m2"
+    id 'io.qameta.allure' version '2.12.0'
 }
 
-repositories {
-    mavenCentral()
-}
+group = 'gmail.sandrounknown1991'
+version = '1.0-SNAPSHOT'
 
 def junitVersion = "5.11.3",
     selenideVersion = "7.5.1",
     restAssuredVersion = "5.5.0",
     allureVersion = "2.29.0",
     assertjVersion = "3.24.2"
+
+
+repositories {
+    mavenCentral()
+}
 
 allure {
     report {
@@ -40,24 +44,14 @@ dependencies {
     )
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
 tasks.withType(Test) {
-    useJUnitPlatform()
     systemProperties(System.getProperties())
+    useJUnitPlatform()
 
     testLogging {
         lifecycle {
             events "started", "skipped", "failed", "standard_error", "standard_out"
             exceptionFormat "short"
         }
-    }
-}
-
-task apiTest(type: Test) {
-    useJUnitPlatform {
-        includeTags("API")
     }
 }
