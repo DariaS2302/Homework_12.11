@@ -1,32 +1,30 @@
 package api;
 
 import io.qameta.allure.Step;
-import models.LoginUserModel;
-import models.LoginUserResponseModel;
+import models.LoginRequestModel;
+import models.LoginResponseModel;
 
 import static io.restassured.RestAssured.given;
-import static specs.BookStoreSpec.loginRequestSpec;
-import static specs.BookStoreSpec.statusCodeResponse200Spec;
+import static specs.Specification.*;
 
 public class AuthorizationApi {
 
-    @Step("Залогинить пользователя")
+    @Step("Получить авторизационные данные.")
+    public static LoginResponseModel getAuthData(String userName, String userPassword) {
 
-    public static LoginUserResponseModel getAuthorizationData(String userName, String userPassword) {
-
-        LoginUserModel request = new LoginUserModel();
+        LoginRequestModel request = new LoginRequestModel();
         request.setUserName(userName);
         request.setPassword(userPassword);
 
         return given()
-                .spec(loginRequestSpec)
+                .spec(requestSpec)
                 .body(request)
 
                 .when()
                 .post("/Account/v1/Login")
 
                 .then()
-                .spec(statusCodeResponse200Spec)
-                .extract().as(LoginUserResponseModel.class);
+                .spec(responseSpec200)
+                .extract().as(LoginResponseModel.class);
     }
 }
