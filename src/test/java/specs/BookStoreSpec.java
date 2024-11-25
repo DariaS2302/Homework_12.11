@@ -11,7 +11,7 @@ import static io.restassured.http.ContentType.JSON;
 
 public class BookStoreSpec {
 
-    public static RequestSpecification loginRequestSpec = with()
+    public static final RequestSpecification loginRequestSpec = with()
             .filter(withCustomTemplates())
             .contentType(JSON)
             .log().all();

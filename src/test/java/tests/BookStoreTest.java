@@ -1,16 +1,12 @@
 package tests;
 
 import api.BookStoreApi;
-import api.ProfileUserApi;
 import helpers.extensions.WithLogin;
-import models.GetBookListModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.ProfilePage;
-
-import static io.qameta.allure.Allure.step;
-import static org.assertj.core.api.Assertions.assertThat;
+import static data.AuthorizationData.USER_NAME;
 
 @Tag("API")
 
@@ -20,29 +16,21 @@ public class BookStoreTest extends TestBase {
     @WithLogin
     @DisplayName("Проверка успешного удаления книги из корзины")
     void successfulDeleteBookTest() {
+        BookStoreApi bookStoreApi = new BookStoreApi();
+        bookStoreApi.deleteAllBooksInCart();
 
-        step("Удалить все книги из корзины", () ->
-                BookStoreApi.deleteAllBooksInCart());
+        String isbn = bookStoreApi.getRandomIsbn();
+        bookStoreApi.addBookToCart(isbn);
 
-        step("Добавить книгу в корзину", () ->
-                BookStoreApi.addBookToCart("9781449325862"));
+        ProfilePage profilePage = new ProfilePage();
+        profilePage
+                .openPage()
+                .checkAuthData(USER_NAME)
+                .checkBookInProfile(isbn)
+                .deleteBook(isbn)
+                .checkResultOnUi(isbn);
 
-        step("Удалить книгу из корзины", () -> {
-            ProfilePage.openPage();
-            ProfilePage.deleteOneBook();
-            ProfilePage.checkDeleteBookWithUI();
-        });
-
-        step("Получить список книг в корзине через API", () -> {
-            GetBookListModel response = ProfileUserApi.getListOfBooks();
-            assertThat(response.getBooks()).isNotNull();
-        });
-
-        step("Проверить удаление книги через API", () -> {
-            GetBookListModel response = ProfileUserApi.getListOfBooks();
-            assertThat(response.getBooks()).isEmpty();
-        });
+        bookStoreApi.checkResultOnApi();
     }
-    
 
 }

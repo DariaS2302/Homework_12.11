@@ -1,22 +1,56 @@
 package pages;
 
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
+
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.*;
 
 public class ProfilePage {
 
-    public static void openPage() {
+    private final SelenideElement
+            firstBookSelector = $$(".rt-tr-group").first(),
+            deleteConfirmSelector = $("#closeSmallModal-ok");
+
+    @Step("Открыть страницу с профилем.")
+    public ProfilePage openPage() {
+
         open("/profile");
+
+        return this;
     }
 
-    public static void deleteOneBook() {
-        $("#delete-record-undefined").click();
-        $("#closeSmallModal-ok").click();
+    @Step("Проверить, что авторизовались под правильным пользователем.")
+    public ProfilePage checkAuthData(String userName) {
+
+        $("#userName-value").shouldHave(text(userName));
+
+        return this;
     }
 
-    public static void checkDeleteBookWithUI() {
-        $("#see-book-Git Pocket Guide").shouldNotBe(visible);
+    @Step("Проверить, что книга есть в профиле.")
+    public ProfilePage checkBookInProfile(String isbn) {
+
+        firstBookSelector.$("a[href='/profile?book=" + isbn + "']").shouldBe(exist);
+
+        return this;
     }
 
+    @Step("Удалить книгу.")
+    public ProfilePage deleteBook(String isbn) {
+
+        firstBookSelector.$("#delete-record-undefined").click();
+        deleteConfirmSelector.click();
+
+        return this;
+    }
+
+    @Step("Проверить результат на UI-слое.")
+    public ProfilePage checkResultOnUi(String isbn) {
+
+        firstBookSelector.$("a[href='/profile?book=" + isbn + "']").shouldNot(exist);
+
+        return this;
+    }
 }

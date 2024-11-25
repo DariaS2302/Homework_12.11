@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
@@ -12,9 +13,9 @@ public class BookModel {
             publish_date,
             publisher;
 
-    private int pages;
+    @JsonProperty("publish_date")
+    private String publishDate;
 
-    private String description,
-            website;
+    private int pages;
 
 }
